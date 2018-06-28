@@ -1,0 +1,148 @@
+{
+  "format_version": 3,
+  "group": "webinar",
+  "pipeline": {
+    "label_template" : "${COUNT}",
+    "lock_behavior" : "none",
+    "name" : "ci_build_and_test",
+    "template" : null,
+    "parameters" : [ ],
+    "environment_variables" : [ {
+      "secure" : false,
+      "name" : "DOCKERHUB_ORG",
+      "value" : "gocddemo"
+    } ],
+    "materials" : [ {
+      "type" : "git",
+      "attributes" : {
+        "url" : "https://github.com/gocd-demo/k8s-webinar.git",
+        "destination" : null,
+        "filter" : null,
+        "invert_filter" : false,
+        "name" : null,
+        "auto_update" : true,
+        "branch" : "master",
+        "submodule_folder" : null,
+        "shallow_clone" : true
+      }
+    } ],
+    "stages" : [ {
+      "name" : "defaultStage",
+      "fetch_materials" : true,
+      "clean_working_directory" : false,
+      "never_cleanup_artifacts" : false,
+      "approval" : {
+        "type" : "success",
+        "authorization" : {
+          "roles" : [ ],
+          "users" : [ ]
+        }
+      },
+      "environment_variables" : [ ],
+      "jobs" : [ {
+        "name" : "defaultJob",
+        "run_instance_count" : null,
+        "timeout" : null,
+        "elastic_profile_id" : "demo-app",
+        "environment_variables" : [ ],
+        "resources" : [ ],
+        "tasks" : [ {
+          "type" : "exec",
+          "attributes" : {
+            "run_if" : [ "passed" ],
+            "command" : "/bin/bash",
+            "arguments" : [ "-c", "docker build . --cache-from gocddemo/guestbook:latest -t gocddemo/guestbook:v${GO_PIPELINE_LABEL} -t gocddemo/guestbook:latest" ]
+          }
+        }, {
+          "type" : "exec",
+          "attributes" : {
+            "run_if" : [ "passed" ],
+            "command" : "rake",
+            "arguments" : [ "create_json" ]
+          }
+        } ],
+        "tabs" : [ ],
+        "artifacts" : [ {
+          "type" : "external",
+          "artifact_id" : "frontend",
+          "store_id" : "dockerhub",
+          "configuration" : [ {
+            "key" : "BuildFile",
+            "value" : "artifact_info.json"
+          } ]
+        } ],
+        "properties" : null
+      }, {
+        "name" : "ComponentTests",
+        "run_instance_count" : null,
+        "timeout" : null,
+        "elastic_profile_id" : "demo-app",
+        "environment_variables" : [ ],
+        "resources" : [ ],
+        "tasks" : [ {
+          "type" : "exec",
+          "attributes" : {
+            "run_if" : [ "passed" ],
+            "command" : "/bin/bash",
+            "arguments" : [ "-c", "echo \"Component tests run here..\"" ]
+          }
+        } ],
+        "tabs" : [ ],
+        "artifacts" : [ ],
+        "properties" : null
+      }, {
+        "name" : "ComponentPerformanceTests",
+        "run_instance_count" : null,
+        "timeout" : null,
+        "elastic_profile_id" : "demo-app",
+        "environment_variables" : [ ],
+        "resources" : [ ],
+        "tasks" : [ {
+          "type" : "exec",
+          "attributes" : {
+            "run_if" : [ ],
+            "command" : "/bin/bash",
+            "arguments" : [ "-c", "echo \"Component performance tests run here..\"" ]
+          }
+        } ],
+        "tabs" : [ ],
+        "artifacts" : [ ],
+        "properties" : null
+      } ]
+    }, {
+      "name" : "VulnerabilityTests",
+      "fetch_materials" : true,
+      "clean_working_directory" : false,
+      "never_cleanup_artifacts" : false,
+      "approval" : {
+        "type" : "success",
+        "authorization" : {
+          "roles" : [ ],
+          "users" : [ ]
+        }
+      },
+      "environment_variables" : [ ],
+      "jobs" : [ {
+        "name" : "RunTests",
+        "run_instance_count" : null,
+        "timeout" : null,
+        "elastic_profile_id" : "demo-app",
+        "environment_variables" : [ ],
+        "resources" : [ ],
+        "tasks" : [ {
+          "type" : "exec",
+          "attributes" : {
+            "run_if" : [ ],
+            "command" : "/bin/bash",
+            "arguments" : [ "-c", "echo \"Vulnerability tests are run here..\"" ]
+          }
+        } ],
+        "tabs" : [ ],
+        "artifacts" : [ ],
+        "properties" : null
+      } ]
+    } ],
+    "tracking_tool" : null,
+    "timer" : null
+  }
+}
