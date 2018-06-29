@@ -13,17 +13,15 @@
   }],
   "materials": [{
     "type": "git",
-    "attributes": {
-      "url": "https://github.com/gocd-demo/k8s-webinar.git",
-      "destination": null,
-      "filter": null,
-      "invert_filter": false,
-      "name": null,
-      "auto_update": true,
-      "branch": "master",
-      "submodule_folder": null,
-      "shallow_clone": true
-    }
+    "url": "https://github.com/gocd-demo/k8s-webinar.git",
+    "destination": null,
+    "filter": null,
+    "invert_filter": false,
+    "name": null,
+    "auto_update": true,
+    "branch": "master",
+    "submodule_folder": null,
+    "shallow_clone": true
   }],
   "stages": [{
     "name": "defaultStage",
@@ -119,8 +117,8 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-          "command": "/bin/bash",
-          "arguments": ["-c", "echo \"Vulnerability tests are run here..\""]
+        "command": "/bin/bash",
+        "arguments": ["-c", "echo \"Vulnerability tests are run here..\""]
       }],
       "tabs": [],
       "artifacts": [],
