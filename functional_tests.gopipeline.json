@@ -1,0 +1,87 @@
+{
+  "label_template": "${COUNT}",
+  "lock_behavior": "none",
+  "format_version": 3,
+  "group": "webinar",
+  "name": "functional_tests_copy",
+  "template": null,
+  "parameters": [],
+  "environment_variables": [],
+  "materials": [{
+    "type": "git",
+    "url": "https://github.com/gocd-demo/k8s-webinar.git",
+    "destination": null,
+    "filter": null,
+    "invert_filter": false,
+    "name": null,
+    "auto_update": true,
+    "branch": "master",
+    "submodule_folder": null,
+    "shallow_clone": true
+  }, {
+    "type": "dependency",
+    "pipeline": "ci_build_and_test",
+    "stage": "defaultStage",
+    "name": "upstream",
+    "auto_update": true
+  }],
+  "stages": [{
+    "name": "defaultStage",
+    "fetch_materials": true,
+    "clean_working_directory": false,
+    "never_cleanup_artifacts": false,
+    "approval": {
+      "type": "success",
+      "roles": [],
+      "users": []
+    },
+    "environment_variables": [],
+    "jobs": [{
+      "name": "defaultJob",
+      "run_instance_count": null,
+      "timeout": null,
+      "elastic_profile_id": "demo-app",
+      "environment_variables": [],
+      "resources": [],
+      "tasks": [{
+        "type": "fetch",
+        "origin": "external",
+        "pipeline": "ci_build_and_test",
+        "stage": "defaultStage",
+        "job": "defaultJob",
+        "id": "frontend",
+        "configuration": []
+      }, {
+        "type": "exec",
+        "run_if": "passed",
+        "command": "docker",
+        "arguments": ["network", "create", "mynet"]
+      }, {
+        "type": "exec",
+        "run_if": "passed",
+        "command": "/bin/bash",
+        "arguments": ["-c", "docker run -itd --name guestbook-demo --net mynet gocddemo/guestbook:$(jq -r '.frontend.image' cd.go.artifact.docker.registry.json | cut -d':' -f2)"]
+      }, {
+        "type": "exec",
+        "run_if": "passed",
+        "command": "/bin/bash",
+        "arguments": ["-c", "docker run --net mynet gocddemo/gauge-tests:v2"]
+      }, {
+        "type": "exec",
+        "run_if": "passed",
+        "command": "/bin/bash",
+        "arguments": ["-c", "docker stop $(docker ps -aq); docker rm $(docker ps -aq);"]
+      }, {
+        "type": "exec",
+        "run_if": "passed",
+        "command": "docker",
+        "arguments": ["network", "rm", "mynet"]
+      }],
+      "tabs": [],
+      "artifacts": [],
+      "properties": null
+    }]
+  }],
+  "tracking_tool": null,
+  "timer": null
+}
