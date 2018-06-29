@@ -57,7 +57,7 @@
       "tabs": [],
       "artifacts": [{
         "type": "external",
-        "artifact_id": "frontend",
+        "id": "frontend",
         "store_id": "dockerhub",
         "configuration": [{
           "key": "BuildFile",
