@@ -32,10 +32,8 @@
     "never_cleanup_artifacts": false,
     "approval": {
       "type": "success",
-      "authorization": {
-        "roles": [],
-        "users": []
-      }
+      "roles": [],
+      "users": []
     },
     "environment_variables": [],
     "jobs": [{
@@ -47,18 +45,14 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "attributes": {
-          "run_if": ["passed"],
-          "command": "/bin/bash",
-          "arguments": ["-c", "docker build . --cache-from gocddemo/guestbook:latest -t gocddemo/guestbook:v${GO_PIPELINE_LABEL} -t gocddemo/guestbook:latest"]
-        }
+        "run_if": ["passed"],
+        "command": "/bin/bash",
+        "arguments": ["-c", "docker build . --cache-from gocddemo/guestbook:latest -t gocddemo/guestbook:v${GO_PIPELINE_LABEL} -t gocddemo/guestbook:latest"]
       }, {
         "type": "exec",
-        "attributes": {
-          "run_if": ["passed"],
-          "command": "rake",
-          "arguments": ["create_json"]
-        }
+        "run_if": ["passed"],
+        "command": "rake",
+        "arguments": ["create_json"]
       }],
       "tabs": [],
       "artifacts": [{
@@ -80,11 +74,9 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "attributes": {
-          "run_if": ["passed"],
-          "command": "/bin/bash",
-          "arguments": ["-c", "echo \"Component tests run here..\""]
-        }
+        "run_if": ["passed"],
+        "command": "/bin/bash",
+        "arguments": ["-c", "echo \"Component tests run here..\""]
       }],
       "tabs": [],
       "artifacts": [],
@@ -98,11 +90,9 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "attributes": {
-          "run_if": [],
-          "command": "/bin/bash",
-          "arguments": ["-c", "echo \"Component performance tests run here..\""]
-        }
+        "run_if": [],
+        "command": "/bin/bash",
+        "arguments": ["-c", "echo \"Component performance tests run here..\""]
       }],
       "tabs": [],
       "artifacts": [],
@@ -130,11 +120,9 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "attributes": {
-          "run_if": [],
-          "command": "/bin/bash",
-          "arguments": ["-c", "echo \"Vulnerability tests are run here..\""]
-        }
+        "run_if": [],
+        "command": "/bin/bash",
+        "arguments": ["-c", "echo \"Vulnerability tests are run here..\""]
       }],
       "tabs": [],
       "artifacts": [],
