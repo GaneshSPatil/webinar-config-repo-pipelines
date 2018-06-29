@@ -45,12 +45,12 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "run_if": ["passed"],
+        "run_if": "passed",
         "command": "/bin/bash",
         "arguments": ["-c", "docker build . --cache-from gocddemo/guestbook:latest -t gocddemo/guestbook:v${GO_PIPELINE_LABEL} -t gocddemo/guestbook:latest"]
       }, {
         "type": "exec",
-        "run_if": ["passed"],
+        "run_if": "passed",
         "command": "rake",
         "arguments": ["create_json"]
       }],
@@ -74,7 +74,7 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "run_if": ["passed"],
+        "run_if": "passed",
         "command": "/bin/bash",
         "arguments": ["-c", "echo \"Component tests run here..\""]
       }],
@@ -90,7 +90,6 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "run_if": [],
         "command": "/bin/bash",
         "arguments": ["-c", "echo \"Component performance tests run here..\""]
       }],
@@ -120,9 +119,8 @@
       "resources": [],
       "tasks": [{
         "type": "exec",
-        "run_if": [],
-        "command": "/bin/bash",
-        "arguments": ["-c", "echo \"Vulnerability tests are run here..\""]
+          "command": "/bin/bash",
+          "arguments": ["-c", "echo \"Vulnerability tests are run here..\""]
       }],
       "tabs": [],
       "artifacts": [],
