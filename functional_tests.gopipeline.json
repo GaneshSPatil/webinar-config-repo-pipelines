@@ -20,7 +20,7 @@
     "shallow_clone": true
   }, {
     "type": "dependency",
-    "pipeline": "ci_build_and_test",
+    "pipeline": "ci_build_and_test_copy",
     "stage": "defaultStage",
     "name": "upstream",
     "auto_update": true
@@ -46,7 +46,7 @@
       "tasks": [{
         "type": "fetch",
         "origin": "external",
-        "pipeline": "ci_build_and_test",
+        "pipeline": "ci_build_and_test_copy",
         "stage": "defaultStage",
         "job": "defaultJob",
         "id": "frontend",
